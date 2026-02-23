@@ -1,3 +1,8 @@
+---
+name: openclaw-inwx
+description: "INWX domain registrar management: domain registration, availability check, DNS records, nameservers, DNSSEC, pricing, transfers."
+---
+
 # openclaw-inwx
 
 OpenClaw plugin for INWX (InterNetworX) domain registrar automation.
