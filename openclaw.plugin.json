@@ -1,6 +1,6 @@
 {
   "name": "INWX",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "INWX domain registrar management: domain registration, availability check, DNS records, nameservers, DNSSEC, pricing, transfers.",
   "config": {
     "username": {
