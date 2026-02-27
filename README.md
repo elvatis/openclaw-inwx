@@ -230,7 +230,36 @@ console.log(result.created); // summary of what was created
   - account info
 - `allowedOperations` can restrict to explicit tool names.
 
-## Notes
+## Testing
 
-- No live tests are included in this repository.
-- Unit tests use mocks only.
+### Unit tests
+
+```bash
+npm test
+```
+
+Unit tests use mocks only and require no credentials.
+
+### OTE integration tests
+
+Integration tests run against the INWX OTE sandbox (`ote.inwx.com`). OTE is safe - no real billing, no production impact.
+
+```bash
+# Set OTE credentials
+export INWX_OTE_USERNAME="your-ote-user"
+export INWX_OTE_PASSWORD="your-ote-pass"
+export INWX_OTE_OTP="optional-2fa-secret"
+
+# Run OTE tests
+npm run test:ote
+```
+
+Without credentials set, the OTE suite is automatically skipped.
+
+**Test coverage:**
+- Client authentication and session management
+- All read tools (account info, domain check/list/pricing, contacts)
+- Guard enforcement (readOnly, allowedOperations) on live connection
+- Input validation (empty/missing required params)
+- API error handling (invalid credentials)
+- Full buildToolset round-trip against OTE
