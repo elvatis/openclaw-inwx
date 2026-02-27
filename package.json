@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/homeofe/openclaw-inwx.git"
+    "url": "https://github.com/elvatis/openclaw-inwx.git"
   },
   "dependencies": {
     "domrobot-client": "^3.3.0"
