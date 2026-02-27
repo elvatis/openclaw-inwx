@@ -1,7 +1,7 @@
 {
   "name": "@elvatis_com/openclaw-inwx",
   "version": "0.1.2",
-  "description": "OpenClaw plugin for INWX domain registrar — domain registration, DNS management, nameservers, DNSSEC, pricing",
+  "description": "OpenClaw plugin for INWX domain registrar - domain registration, DNS management, nameservers, DNSSEC, pricing",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

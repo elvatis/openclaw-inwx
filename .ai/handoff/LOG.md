@@ -1,6 +1,6 @@
-# openclaw-inwx — Log
+# openclaw-inwx - Log
 
-## 2026-02-23 — Project Initialization (Akido)
+## 2026-02-23 - Project Initialization (Akido)
 
 - Created project directory + AAHP structure
 - Initialized package.json, tsconfig.json, openclaw.plugin.json
@@ -9,7 +9,7 @@
 - Researched API: JSON-RPC via domrobot-client, OTE test env available
 - Skill shortcut created
 
-## 2026-02-23 — Full Plugin Implementation (Subagent)
+## 2026-02-23 - Full Plugin Implementation (Subagent)
 
 - Implemented `src/types.ts` with domain, DNS, DNSSEC, contact, account, pricing, config, and tool handler types
 - Implemented `src/client.ts` as wrapper for `domrobot-client`

@@ -1,4 +1,4 @@
-# openclaw-inwx — Status
+# openclaw-inwx - Status
 
 > Last updated: 2026-02-23
 > Phase: P1-P4 completed, ready for repo remote and release steps
