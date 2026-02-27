@@ -1,5 +1,26 @@
 # openclaw-inwx - Log
 
+## 2026-02-27 - ISPConfig Provisioning Integration (T-004)
+
+- Created `src/provisioning.ts` with `provisionDomainWithHosting()` workflow function
+  - Orchestrates INWX domain registration + ISPConfig hosting provisioning
+  - Dependency injection pattern: accepts both toolsets, no hard npm dep on ispconfig
+  - 4-step workflow: domain check, register, nameserver set, ISPConfig provision
+  - Step-level tracking with ok/error/skipped status
+  - Early return on error with partial results
+- Updated `src/index.ts` to re-export provisioning types and function
+- Added `tests/provisioning.test.ts` with 11 tests covering:
+  - Full happy-path workflow
+  - Domain already taken (skip registration)
+  - skipRegistration flag
+  - Error handling at each step (check, register, ISPConfig)
+  - Empty domain validation
+  - Missing tool in toolset
+  - Parameter forwarding to both INWX and ISPConfig tools
+  - Empty nameservers (skip step)
+- Updated README.md and SKILL.md with integration documentation
+- Build: 4/4 suites, 22/22 tests passing
+
 ## 2026-02-23 - Project Initialization (Akido)
 
 - Created project directory + AAHP structure

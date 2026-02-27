@@ -142,11 +142,23 @@ This points the client to INWX OTE API endpoint and allows free integration test
 
 ## Integration with openclaw-ispconfig
 
-Typical full provisioning chain:
+This plugin exports `provisionDomainWithHosting()` for end-to-end domain-to-hosting provisioning. It orchestrates both plugins without a hard dependency:
 
-1. Use `openclaw-inwx` to register domain and configure nameservers/DNS.
-2. Use `openclaw-ispconfig` to provision website, mail, and database.
-3. Result: End-to-end domain-to-hosting automation.
+1. **Domain check** - `inwx_domain_check`
+2. **Domain register** - `inwx_domain_register` (skipped if taken or `skipRegistration=true`)
+3. **Nameserver set** - `inwx_nameserver_set`
+4. **Hosting provision** - `isp_provision_site` (site, DNS zone, mail, database)
+
+```typescript
+import { buildToolset, provisionDomainWithHosting } from "@elvatis_com/openclaw-inwx";
+import ispPlugin from "@elvatis_com/openclaw-ispconfig";
+
+const result = await provisionDomainWithHosting(
+  buildToolset(inwxConfig),
+  ispPlugin.buildToolset(ispConfig),
+  { domain: "example.com", nameservers: ["ns1.host.de"], serverIp: "1.2.3.4", clientName: "Acme", clientEmail: "a@acme.com" },
+);
+```
 
 ## Safety
 

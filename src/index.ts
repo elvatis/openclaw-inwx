@@ -2,6 +2,14 @@ import pluginManifest from "../openclaw.plugin.json";
 import { createTools } from "./tools";
 import { JsonMap, OpenClawRuntimeLike, PluginConfig } from "./types";
 
+export {
+  provisionDomainWithHosting,
+  ExternalBoundTool,
+  ProvisionDomainHostingParams,
+  ProvisioningResult,
+  ProvisioningStep,
+} from "./provisioning";
+
 function ensureConfig(config: Partial<PluginConfig>): PluginConfig {
   if (!config.username || !config.password) {
     throw new Error("Missing required config: username, password");

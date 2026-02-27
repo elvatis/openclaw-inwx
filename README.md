@@ -137,11 +137,86 @@ This points the client to INWX OTE API endpoint and allows free integration test
 
 ## Integration with openclaw-ispconfig
 
-Typical full provisioning chain:
+This plugin exports a `provisionDomainWithHosting` function that orchestrates both openclaw-inwx and openclaw-ispconfig into a single domain-to-hosting provisioning workflow. No hard npm dependency on openclaw-ispconfig is required - the function accepts both toolsets via dependency injection.
 
-1. Use `openclaw-inwx` to register domain and configure nameservers/DNS.
-2. Use `openclaw-ispconfig` to provision website, mail, and database.
-3. Result: End-to-end domain-to-hosting automation.
+### Provisioning workflow steps
+
+1. **Domain check** - verify availability via `inwx_domain_check`
+2. **Domain register** - register via `inwx_domain_register` (skipped if already taken or `skipRegistration=true`)
+3. **Nameserver set** - configure nameservers via `inwx_nameserver_set`
+4. **Hosting provision** - create site, DNS zone, mail, and database via `isp_provision_site`
+
+### Usage
+
+```typescript
+import { buildToolset, provisionDomainWithHosting } from "@elvatis_com/openclaw-inwx";
+import ispPlugin from "@elvatis_com/openclaw-ispconfig";
+
+const inwxTools = buildToolset({
+  username: "inwx-user",
+  password: "inwx-pass",
+  environment: "ote",
+});
+
+const ispTools = ispPlugin.buildToolset({
+  apiUrl: "https://ispconfig.example.com:8080/remote/json.php",
+  username: "api-user",
+  password: "api-pass",
+  serverId: 1,
+  defaultServerIp: "1.2.3.4",
+});
+
+const result = await provisionDomainWithHosting(inwxTools, ispTools, {
+  domain: "example.com",
+  nameservers: ["ns1.hosting.de", "ns2.hosting.de"],
+  serverIp: "1.2.3.4",
+  clientName: "Acme Corp",
+  clientEmail: "admin@acme.com",
+  createMail: true,
+  createDb: true,
+});
+
+console.log(result.ok);     // true if all steps succeeded
+console.log(result.steps);  // per-step status tracking
+console.log(result.created); // summary of what was created
+```
+
+### Parameters
+
+| Parameter | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| domain | string | yes | - | Domain to register and provision |
+| nameservers | string[] | yes | - | Nameservers to set on the domain |
+| serverIp | string | yes | - | Hosting server IP (for ISPConfig A record) |
+| clientName | string | yes | - | ISPConfig client name |
+| clientEmail | string | yes | - | ISPConfig client email |
+| createMail | boolean | no | true | Create mail domain and mailboxes |
+| createDb | boolean | no | true | Create database and user |
+| serverId | number | no | config default | ISPConfig server ID |
+| registrationPeriod | number | no | 1 | Domain registration period in years |
+| contacts | object | no | - | INWX contact IDs for registration |
+| skipRegistration | boolean | no | false | Skip domain registration step |
+
+### Result structure
+
+```typescript
+{
+  ok: boolean;            // true if all steps succeeded
+  domain: string;
+  steps: Array<{
+    step: string;         // "domain_check" | "domain_register" | "nameserver_set" | "isp_provision"
+    status: "ok" | "error" | "skipped";
+    data?: unknown;
+    error?: string;
+  }>;
+  created: {
+    domainRegistered?: boolean;
+    nameserversConfigured?: boolean;
+    hostingProvisioned?: boolean;
+    ispProvisionResult?: unknown;
+  };
+}
+```
 
 ## Safety
 

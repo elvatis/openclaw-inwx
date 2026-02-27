@@ -12,7 +12,8 @@
 - [ ] Validate real-world parameter schemas against INWX API examples
 - [ ] Expand docs with real request/response examples from OTE
 
-## P7 - Ecosystem Integration
+## P7 - Ecosystem Integration (Done)
 
-- [ ] Link operational playbook with `openclaw-ispconfig`
-- [ ] Add example full provisioning workflow for domain-to-hosting chain
+- [x] Link operational playbook with `openclaw-ispconfig`
+- [x] Add composable `provisionDomainWithHosting` workflow function
+- [x] Document integration usage with parameters and result structure
