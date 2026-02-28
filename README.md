@@ -263,3 +263,8 @@ Without credentials set, the OTE suite is automatically skipped.
 - Input validation (empty/missing required params)
 - API error handling (invalid credentials)
 - Full buildToolset round-trip against OTE
+
+## Shared Template
+
+For automation that creates GitHub issues, use `src/templates/github-issue-helper.ts`.
+It provides `isValidIssueRepoSlug()`, `resolveIssueRepo()`, and `buildGhIssueCreateCommand()`.
