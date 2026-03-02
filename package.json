@@ -6,12 +6,25 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "jest",
-    "test:ote": "jest --config jest.config.ote.cjs",
-    "prepublishOnly": "npm run build"
+    "test": "vitest run",
+    "prepublishOnly": "npm run build",
+    "test:watch": "vitest",
+    "test:ote": "vitest run --config vitest.ote.config.ts"
   },
-  "files": ["dist", "openclaw.plugin.json", "README.md"],
-  "keywords": ["openclaw", "inwx", "domain", "dns", "registrar", "dnssec", "nameserver"],
+  "files": [
+    "dist",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "keywords": [
+    "openclaw",
+    "inwx",
+    "domain",
+    "dns",
+    "registrar",
+    "dnssec",
+    "nameserver"
+  ],
   "author": "Elvatis <info@example.invalid>",
   "license": "MIT",
   "repository": {
@@ -22,10 +35,11 @@
     "domrobot-client": "^3.3.0"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
     "@types/node": "^22.0.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.2.0",
-    "@types/jest": "^29.5.0"
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "overrides": {
+    "test-exclude": "^7.0.1"
   }
 }

@@ -3,9 +3,10 @@ import {
   ExternalBoundTool,
   ProvisionDomainHostingParams,
 } from "../src/provisioning";
+import { vi } from 'vitest'
 
 function mockTool(name: string, result: unknown = {}): ExternalBoundTool {
-  return { name, run: jest.fn(async () => result) };
+  return { name, run: vi.fn(async () => result) };
 }
 
 function baseParams(overrides: Partial<ProvisionDomainHostingParams> = {}): ProvisionDomainHostingParams {
@@ -80,7 +81,7 @@ describe("provisionDomainWithHosting", () => {
   it("returns error when domain check fails", async () => {
     const failCheck: ExternalBoundTool = {
       name: "inwx_domain_check",
-      run: jest.fn(async () => { throw new Error("API timeout"); }),
+      run: vi.fn(async () => { throw new Error("API timeout"); }),
     };
     const inwx = inwxToolset({ inwx_domain_check: failCheck });
     const isp = ispToolset();
@@ -94,7 +95,7 @@ describe("provisionDomainWithHosting", () => {
   it("returns error when domain registration fails", async () => {
     const failReg: ExternalBoundTool = {
       name: "inwx_domain_register",
-      run: jest.fn(async () => { throw new Error("Insufficient balance"); }),
+      run: vi.fn(async () => { throw new Error("Insufficient balance"); }),
     };
     const inwx = inwxToolset({ inwx_domain_register: failReg });
     const isp = ispToolset();
@@ -109,7 +110,7 @@ describe("provisionDomainWithHosting", () => {
   it("returns error when ISPConfig provisioning fails", async () => {
     const failIsp: ExternalBoundTool = {
       name: "isp_provision_site",
-      run: jest.fn(async () => { throw new Error("Connection refused"); }),
+      run: vi.fn(async () => { throw new Error("Connection refused"); }),
     };
     const inwx = inwxToolset();
     const isp = ispToolset({ isp_provision_site: failIsp });

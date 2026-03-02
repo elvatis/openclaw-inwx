@@ -1,10 +1,11 @@
 import { INWX_ERROR_MESSAGES, InwxApiError, InwxClient } from "../src/client";
+import { vi } from 'vitest'
 
 function mockFactory(responseByMethod: Record<string, unknown>, loginOk = true) {
   return () => ({
-    login: jest.fn(async () => (loginOk ? { code: 1000 } : null)),
-    logout: jest.fn(async () => ({ code: 1000 })),
-    callApi: jest.fn(async (method: string) => responseByMethod[method] as { code?: number; msg?: string; resData?: unknown }),
+    login: vi.fn(async () => (loginOk ? { code: 1000 } : null)),
+    logout: vi.fn(async () => ({ code: 1000 })),
+    callApi: vi.fn(async (method: string) => responseByMethod[method] as { code?: number; msg?: string; resData?: unknown }),
   });
 }
 

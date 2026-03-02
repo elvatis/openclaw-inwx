@@ -1,10 +1,11 @@
 import { createTools } from "../src/tools";
 import { InwxClient } from "../src/client";
+import { vi, type Mock } from 'vitest'
 
-jest.mock("../src/client", () => {
+vi.mock("../src/client", () => {
   return {
-    InwxClient: jest.fn().mockImplementation(() => ({
-      call: jest.fn(async (method: string) => {
+    InwxClient: vi.fn().mockImplementation(() => ({
+      call: vi.fn(async (method: string) => {
         if (method === "domain.check") {
           return { checks: [{ domain: "example.com", avail: true, price: 9.99, currency: "EUR" }] };
         }
@@ -13,7 +14,7 @@ jest.mock("../src/client", () => {
         }
         return {};
       }),
-      logout: jest.fn(async () => undefined),
+      logout: vi.fn(async () => undefined),
     })),
   };
 });
@@ -37,6 +38,6 @@ describe("tools", () => {
 
   it("ensures all 23 tools are registered in factory", () => {
     expect(createTools()).toHaveLength(23);
-    expect(jest.isMockFunction(InwxClient)).toBe(true);
+    expect(vi.isMockFunction(InwxClient)).toBe(true);
   });
 });
